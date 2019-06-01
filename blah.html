@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/style.css"> -->
+    <title>Word Guess</title>
+</head>
+
+<body>
+    <div id="begin"></div>
+    <div id="txtContent"></div>
+    <script type="text/javascript">
+        var splashPageOn = true;
+        document.getElementById("begin").textContent = "Press any key to play!";
+        document.onkeyup = function (event) {
+            if (splashPageOn) {
+                document.getElementById("begin").textContent = "";
+                splashPageOn = false;
+            }
+            console.log(splashPageOn)
+        }
+
+        // The code in the following if statement doesn't run.  I can't figure out why. 
+
+        if (splashPageOn === false) {
+            // display instructions  
+            document.getElementById("txtContent").textContent = "Press a letter or the spacebar";
+        };de
+    </script>
+</body>
+
+</html>
