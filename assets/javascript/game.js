@@ -2,19 +2,24 @@
 // The theme is popular Magic the Gatering cards played in the game's 'Modern' format.
 
 
-var splashPageOn = true;
 
-document.getElementById("begin").textContent = "Press enter to play!";
+
+//document.getElementById("begin").textContent = "Press enter to play!";
 
 // creates array holding all possible words/phrases to be guessed
 var allWords = ["path to exile", "serum visions", "scapeshift", "arclight phoenix", "cavern of souls", "tarmogoyf", "dark confidant",
     "scavenging ooze", "thoughtseize", "inquisition of kozilek", "liliana of the veil", "jace, the mind sculptor", "remand",
     "mana leak", "opt", "snapcaster mage", "wurmcoil engine"
 ];
+var splashPageOn = false; /// Set to true before submitting
 var beingGuessed = []; // array which will hold all letters of word being guessed
 var finishedRound = true; // tells the game if a new word should be picked
 var partialWord = "";
 var wordBeingGuessed = "";
+var guessesRemaining = 0;
+var lettersGuessed = "";
+var wins = 0;
+var letters = [" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "_"];
 
 function Displaypartialword() {
     document.getElementById("beingGuessed").textContent = partialWord;
@@ -35,8 +40,12 @@ document.onkeyup = function (event) {
         // display instructions  
         document.getElementById("instructions").textContent = "Press a letter or the spacebar";
         if (finishedRound) {
-            wordBeingGuessed = allWords[Math.floor(Math.random() * allWords.length)]; // generate random number to determine which word to be used
+            // reset variables
             partialWord = "";
+            guessesRemaining = 0;
+            lettersGuessed = "";
+            wordBeingGuessed = allWords[Math.floor(Math.random() * allWords.length)]; // generate random number to determine which word to be used
+
             for (i = 0; i < wordBeingGuessed.length; i++) {
                 partialWord = setCharAt(partialWord, i, '-'); // display underscores for each letter not yet guessed
             }
@@ -46,16 +55,30 @@ document.onkeyup = function (event) {
         } else {
 
             // when user guesses a correct letter, display the letter in place of dash
-           
+
             for (i = 0; i < wordBeingGuessed.length; i++) {
                 if (event.key === wordBeingGuessed[i]) {
                     partialWord = setCharAt(partialWord, i, wordBeingGuessed[i]);
-                    console.log(partialWord);
                 }
             }
             Displaypartialword();
 
         }
+
+
+        for (i = 0; i < letters.length; i++) {
+            if (event.key === letters[i].toLocaleLowerCase()) {
+                lettersGuessed = lettersGuessed.concat(", ", event.key);
+                
+            }
+          
+        }
+
+        document.getElementById("guessesRemaining").textContent = guessesRemaining;
+        document.getElementById("lettersGuessed").textContent = "Letters Guessed: ";
+        document.getElementById("wins").textContent = wins;
+        document.getElementById("actualLettersGuessed").textContent = lettersGuessed;
+
     }
 
 }
