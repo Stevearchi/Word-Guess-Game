@@ -22,3 +22,12 @@ h1 {
     max-width: 40%;
     height: auto;
 }
+
+#instructions {
+    margin-top: 5em;
+}
+
+#beingGuessed {
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
