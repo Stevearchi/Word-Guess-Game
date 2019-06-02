@@ -1,3 +1,7 @@
+body {
+background: darkslategray;
+color: #ffffff;
+}
 #begin {
     font-size: 5em;
     margin: auto;
@@ -6,4 +10,15 @@
 
 #beingGuessed {
     font-family: Inconsolata, monospace, ;
+}
+h1 {
+    font-family: "Baloo Da" , "cursive", "serif";
+    margin: auto;
+    text-align: center;
+    color: lightcoral;
+}
+
+.cardImage{
+    max-width: 40%;
+    height: auto;
 }
