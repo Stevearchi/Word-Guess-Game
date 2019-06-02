@@ -4,22 +4,29 @@
 // Press any key to get started
 var splashPageOn = true;
 document.getElementById("begin").textContent = "Press any key to play!";
+
+// creates array holding all possible words to be guessed
+
 document.onkeyup = function(event){    
     if (splashPageOn){
-        document.getElementById("begin").textContent = "";
-        splashPageOn = false;
+        document.getElementById("begin").textContent = "";     
+        splashPageOn=false; 
+    }
+    if (splashPageOn === false){
+        // display instructions  
+        document.getElementById("txtContent").textContent = "Press a letter or the spacebar";
+      }
+    
+
+    if(event.keyCode===32){ // keycode 32 equals spacebar
+   
     }
     // else{
     //     document.getElementById("txtContent").textContent = "Press a letter or the spacebar";
     // }
 }
 
-// The code in the following if statement doesn't run.  I can't figure out why.  Using the an else instead.
 
-if (splashPageOn === false){
-  // display instructions  
-  document.getElementById("txtContent").textContent = "Press a letter or the spacebar";
-};
 
 
 
