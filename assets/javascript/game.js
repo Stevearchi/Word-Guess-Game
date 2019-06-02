@@ -14,14 +14,18 @@ var allWords = ["path to exile", "serum visions", "scapeshift", "arclight phoeni
 var beingGuessed = []; // array which will hold all letters of word being guessed
 var finishedRound = true; // tells the game if a new word should be picked
 var partialWord = "";
+var wordBeingGuessed = "";
 
+function Displaypartialword() {
+    document.getElementById("beingGuessed").textContent = partialWord;
+}
 // function which changes a character at a specified index in a string.  
-function setCharAt(str, index, chr){
+function setCharAt(str, index, chr) {
     //if(index > str.length-1) return str;
-    return str.substr(0,index) + chr + str.substr(index+1);// returns the new string.
+    return str.substr(0, index) + chr + str.substr(index + 1); // returns the new string.
 }
 document.onkeyup = function (event) {
-    // clears 'Press any enter get started'
+    // clears 'Press any en)ter get started'
 
     if (splashPageOn && event.keyCode === 13) { // keycode 13 = enter
         document.getElementById("begin").textContent = "";
@@ -31,34 +35,32 @@ document.onkeyup = function (event) {
         // display instructions  
         document.getElementById("instructions").textContent = "Press a letter or the spacebar";
         if (finishedRound) {
-            wordBeingGuessed = allWords[Math.floor(Math.random() * allWords.length)];
+            wordBeingGuessed = allWords[Math.floor(Math.random() * allWords.length)]; // generate random number to determine which word to be used
             partialWord = "";
-            for (i = 0; i < wordBeingGuessed.length; i++) {             
-                partialWord = setCharAt(partialWord, i, '-');             
+            for (i = 0; i < wordBeingGuessed.length; i++) {
+                partialWord = setCharAt(partialWord, i, '-'); // display underscores for each letter not yet guessed
             }
             finishedRound = false;
+            Displaypartialword();
+            console.log(wordBeingGuessed)
+        } else {
+
+            // when user guesses a correct letter, display the letter in place of dash
+           
+            for (i = 0; i < wordBeingGuessed.length; i++) {
+                if (event.key === wordBeingGuessed[i]) {
+                    partialWord = setCharAt(partialWord, i, wordBeingGuessed[i]);
+                    console.log(partialWord);
+                }
+            }
+            Displaypartialword();
+
         }
-        console.log(partialWord);
-        //document.getElementById("beingGuessed").
-
     }
 
-
-
-
-    if (event.keyCode === 32) { // keycode 32 equals spacebar
-
-    }
-    // else{
-    //     document.getElementById("txtContent").textContent = "Press a letter or the spacebar";
-    // }
 }
 
 
-
-// generate random number to determine which word to be used
-// display underscores for each letter not yet guessed
-// when user guesses a correct letter, display the letter in place of underscore
 
 
 //display number of guesses remaining
