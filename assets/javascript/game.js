@@ -4,7 +4,6 @@
 
 
 
-document.getElementById("begin").textContent = "Press enter to play";
 
 // creates array holding all possible words/phrases to be guessed
 var allWords = ["Path to Exile",
@@ -34,12 +33,18 @@ function setCharAt(str, index, chr) {
     //if(index > str.length-1) return str;
     return str.substr(0, index) + chr + str.substr(index + 1); // returns the new string.
 }
+
+document.getElementById("header").innerHTML = "<div id = 'begin'>";
+document.getElementById("begin").textContent = "Press enter to play";
+
 document.onkeyup = function (event) {
     // clears 'Press any enter get started'
 
     if (splashPageOn && event.keyCode === 13) { // keycode 13 = enter
-        document.getElementById("begin").textContent = "";
+        document.getElementById("header").innerHTML = "";
+       // document.getElementById("begin").textContent = "";
         splashPageOn = false;
+
     }
     if (splashPageOn === false) {
 
@@ -49,6 +54,7 @@ document.onkeyup = function (event) {
             guessesRemaining = 0;
             lettersGuessed = "";
             var randomWordNumber = Math.floor(Math.random() * allWords.length);
+            document.getElementById("image").innerHTML = '';
             wordBeingGuessed = allWords[randomWordNumber]; // generate random number to determine which word to be used
             //This switch statement sets the path for the image corresponding to the random word
             // I think this could be simpler code if I made an object members in this format: cardname: imagename
