@@ -42,7 +42,7 @@ document.onkeyup = function (event) {
 
     if (splashPageOn && event.keyCode === 13) { // keycode 13 = enter
         document.getElementById("header").innerHTML = "";
-       // document.getElementById("begin").textContent = "";
+        // document.getElementById("begin").textContent = "";
         splashPageOn = false;
 
     }
@@ -50,12 +50,17 @@ document.onkeyup = function (event) {
 
         if (finishedRound) {
             // reset variables
+            document.getElementById("win").textContent = "";
+            document.getElementById("playAgain").textContent = "";
             partialWord = "";
-            guessesRemaining = 0;
             lettersGuessed = "";
+
+            document.getElementById("image").innerHTML = ''; // removes image if there is one being displayed
+            
+            // picks a random number from 0 to the oflength the allWords array
             var randomWordNumber = Math.floor(Math.random() * allWords.length);
-            document.getElementById("image").innerHTML = '';
-            wordBeingGuessed = allWords[randomWordNumber]; // generate random number to determine which word to be used
+            wordBeingGuessed = allWords[randomWordNumber]; // sets wordBeingGuessed based on the random number
+
             //This switch statement sets the path for the image corresponding to the random word
             // I think this could be simpler code if I made an object members in this format: cardname: imagename
             switch (randomWordNumber) {
@@ -108,8 +113,7 @@ document.onkeyup = function (event) {
                     imageName = "wurmcoil-engine"
             }
 
-            guessesRemaining = wordBeingGuessed.length * 3;
-            console.log(wordBeingGuessed)
+            guessesRemaining = wordBeingGuessed.length * 2;
             for (i = 0; i < wordBeingGuessed.length; i++) {
                 if (wordBeingGuessed[i] === " ") {
                     partialWord = setCharAt(partialWord, i, '\xa0') // /xa0 is a non-breakable space. this adds a space to partial word        
@@ -141,15 +145,26 @@ document.onkeyup = function (event) {
 
             }
         }
-        // displays text on the left
-        document.getElementById("guessesRemaining").textContent = "Guesses remaining: " + guessesRemaining;
-        document.getElementById("lettersGuessed").textContent = "Letters Guessed: ";
-        document.getElementById("wins").textContent = "Wins: " + wins;
-        document.getElementById("actualLettersGuessed").textContent = lettersGuessed;
-        document.getElementById("instructions").textContent = "Press a letter to guess if it's in the card name";
+
+        // if user enters a letter, guesses remaining goes down by one
+        for (i = 0; i < letters.length; i++) {
+            if (event.key === letters[i].toLowerCase()) {
+                guessesRemaining--;
+            }
+        }
+
+        if (guessesRemaining === 0) { // user loses
+            document.getElementById("win").textContent = "You lost :( The card was: " + wordBeingGuessed;
+            document.getElementById("playAgain").textContent = "Press any key to play again.";
+            document.getElementById("image").innerHTML = '<img class = "cardImage" src="assets/images/' + imageName + '.jpg">';
+            finishedRound = true;
+        }
+
+
 
         // If user wins
-        if (partialWord.replace(/\s/g, '') === wordBeingGuessed.replace(/\s/g, '')) {
+        if (partialWord.replace(/\s/g, '') === wordBeingGuessed.replace(/\s/g, '')) { // checks if partial word equals wordbeingguessed after 
+            //all spaces are removed from both strings
             finishedRound = true;
             wins++;
             document.getElementById("image").innerHTML = '<img class = "cardImage" src="assets/images/' + imageName + '.jpg">';
@@ -157,34 +172,20 @@ document.onkeyup = function (event) {
             document.getElementById("win").textContent = "You guessed " + wordBeingGuessed + ".  Great job!";
             document.getElementById("playAgain").textContent = "Press any key to play again.";
 
-        } else { //clears the win/lose text and image
-            document.getElementById("win").textContent = "";
-            document.getElementById("playAgain").textContent = "";
+        } else { //clears the win/lose text, play again, and image
+
         }
 
-        if (guessesRemaining <= 0) {
-            document.getElementById("win").textContent = "You lost :( The card was: " + wordBeingGuessed;
-            document.getElementById("playAgain").textContent = "Press any key to play again.";
-            document.getElementById("image").innerHTML = '<img class = "cardImage" src="assets/images/' + imageName + '.jpg">';
-            finishedRound = true;
-        }
-        for (i = 0; i < letters.length; i++) {
-            if (event.key === letters[i].toLowerCase()) {
-                guessesRemaining--;
-            }
-        }
-
+        // displays text on the left
+        //display number of guesses remaining
+        document.getElementById("guessesRemaining").textContent = "Guesses remaining: " + guessesRemaining;
+        //display letters already guessed
+        document.getElementById("lettersGuessed").textContent = "Letters Guessed: ";
+        //display number of user wins
+        document.getElementById("wins").textContent = "Wins: " + wins;
+        document.getElementById("actualLettersGuessed").textContent = lettersGuessed;
+        document.getElementById("instructions").textContent = "Press a letter to guess if it's in the card name";
     }
 
 
 }
-
-
-
-//display number of guesses remaining
-//display letters already guessed
-//display number of user wins
-
-//when user wins or loses alert out if they won or lost
-
-//then restart game
